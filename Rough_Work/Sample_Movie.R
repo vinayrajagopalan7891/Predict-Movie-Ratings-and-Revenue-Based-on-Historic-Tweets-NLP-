@@ -72,14 +72,14 @@ get_imdb_movie_get_business_url <- modify_url(
     tconst = movie_id[3]
   ))
 
-movie_business_data_res <- GET(url = get_imdb_movie_get_business_url,add_headers(.headers = c('x-rapidapi-host' =  'imdb8.p.rapidapi.com', 'x-rapidapi-key' =  'c152df57e4mshc3d4cda6d4a90a8p176431jsn1f7d2cac8de9')))
+movie_business_data_res <- GET(url = get_imdb_movie_get_business_url,add_headers(.headers = c('x-rapidapi-host' =  'imdb8.p.rapidapi.com', 'x-rapidapi-key' =  rapid_api_key)))
 
 movie_business_data <- fromJSON(httr::content(movie_business_data_res, "text"))
 
 
 #Get youtube video related to the movie
 movie_names[1]
-google_bearer_token = "AIzaSyCI5JWqwhwlM2dmpycQbiGpez9rBMrbxYg"
+google_bearer_token = google_bearer_token
 get_youtube_movie_trailer_id_url <- modify_url(
   url = "https://youtube.googleapis.com/youtube/v3/search",
   query = list(
