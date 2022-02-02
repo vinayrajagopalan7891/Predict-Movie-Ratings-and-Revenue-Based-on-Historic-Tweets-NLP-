@@ -30,7 +30,7 @@ movie_ids <- movie_db$movie_imdb_id
 prod_name <- movie_db$production_company
 release_date <- imdb_db$release_dates
 mindate <- '2018-01-07T16:21:08Z'
-google_bearer_token = "AIzaSyDva2wby2e8xIdUnh_J5jnEowYY17U59nY"
+google_bearer_token = google_token
 movie_videos_df <- data.frame()
 
 #Reading movies DB

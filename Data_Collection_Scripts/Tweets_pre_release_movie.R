@@ -60,7 +60,7 @@ for (id in movie_ids[[1]]){
     query = list(
       ids = id
     ))
-  movie_meta_data_res <- GET(url = get_imdb_movie_get_meta_data_url,add_headers(.headers = c('x-rapidapi-host' = 'imdb8.p.rapidapi.com','x-rapidapi-key' = 'cd83355a26msh4cad90d930a467dp16d45fjsn740267ab67a3')))
+  movie_meta_data_res <- GET(url = get_imdb_movie_get_meta_data_url,add_headers(.headers = c('x-rapidapi-host' = 'imdb8.p.rapidapi.com','x-rapidapi-key' = rapid_api_key)))
   movie_meta_data <- fromJSON(httr::content(movie_meta_data_res, "text"))
   Movie_release_dates <- append(Movie_release_dates,movie_meta_data)
 }
@@ -118,7 +118,7 @@ for (i in 1:50){
     )
   )
   print(url_for_tweets)
-  resUser <- GET(url = url_for_tweets,add_headers(authorization = paste0("Bearer ",'AAAAAAAAAAAAAAAAAAAAACi4YgEAAAAAnlZ7Fo6%2FB2ynY3olp1cYQZhyClg%3DgJlsjQAG0DXEM45rC9q5HKvCiCX5iTXpdoTwi9cYqAHCbvk7Dj')))
+  resUser <- GET(url = url_for_tweets,add_headers(authorization = paste0("Bearer ",twitter_sandbox_key)))
   userid<- fromJSON(httr::content(resUser, "text"))
   
   if(length(userid$results)>2){

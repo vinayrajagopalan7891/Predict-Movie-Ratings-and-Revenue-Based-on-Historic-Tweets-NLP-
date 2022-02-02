@@ -29,7 +29,7 @@ for(movie in movie_names) {
       q = movie
     ))
   
-  movie_id_res <- GET(url = get_imdb_movie_id_url,add_headers(.headers = c('x-rapidapi-host' =  'imdb8.p.rapidapi.com', 'x-rapidapi-key' =  'c152df57e4mshc3d4cda6d4a90a8p176431jsn1f7d2cac8de9')))
+  movie_id_res <- GET(url = get_imdb_movie_id_url,add_headers(.headers = c('x-rapidapi-host' =  'imdb8.p.rapidapi.com', 'x-rapidapi-key' =  rapid_api_key)))
   
   movie_ids <- fromJSON(httr::content(movie_id_res, "text"))
   movie_id <- movie_ids$results$id[1]
