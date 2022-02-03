@@ -89,7 +89,7 @@ names(video_df_final)[names(video_df_final) == 'movie_ids.movie.'] <- 'movie_imd
 
 base_table_pred_agg <- merge(x = base_table_pred, y = video_df_final, by = "movie_imdb_id", all.x = TRUE)
 #Renaming predicted label column
-names(base_table_pred_agg)[names(base_table_pred_agg) == 'lm_predict_f'] <- 'predicted_ratings'
+names(base_table_pred_agg)[names(base_table_pred_agg) == 'agg_lm_predict_f'] <- 'predicted_ratings'
 write.csv(base_table_pred_agg,"./Group_Project/Data/base_table_pred_agg_final.csv", row.names = FALSE)
 
 base_table_pred_agg$X <- NULL
@@ -114,7 +114,7 @@ for(col in col_to_remove){
   base_table_final[,col] <- NULL
 }
 set.seed(5)
-
+View(base_table_final)
 
 ## 75% of the sample size
 smp_size <- floor(0.60 * nrow(base_table_final))
@@ -122,17 +122,28 @@ smp_size <- floor(0.60 * nrow(base_table_final))
 ## set the seed to make your partition reproducible
 train_ind <- sample(seq_len(nrow(base_table_final)), size = smp_size)
 train <- base_table_final[train_ind, ]
+nrow(train)
 test <- base_table_final[-train_ind, ]
-n <- names(base_table_final)
-f <- as.formula(paste("revenue ~", paste(n[!n %in% c("movie_imdb_id","revenue")], collapse = " + ")))
+nrow(test)
+n_l <- c("meta_critics_count","commentCount","likeCount","viewCount", "agg_quote_count", "agg_reply_count", "agg_retweet_count", "agg_favorite_count", "predicted_ratings", "cast_last5_movies_avg_actor_credits", "cast_last5_movies_avg_meta_score", "cast_last5_movies_avg_meta_critics_count", "cast_last5_movies_avg_total_runtime", "cast_last5_movies_avg_revenue" ,"total_runtime_in_minute")
+n_l
+right_side = paste0(n_l, collapse=" + ")
 
+f = as.formula(sprintf("revenue ~ %s", right_side))
+f
 ##linear regression
-lm_model <- lm(f, data = train)
-lm_predict <- predict(lm_model,test[,3:ncol(test)])
+lm_model <- lm(revenue ~  cast_last5_movies_avg_meta_critics_count * cast_last5_movies_avg_revenue, data = train)
+lm_predict <- predict(lm_model,test[,n_l])
 r <- multiclass.roc(test$revenue, lm_predict)
-test_roc = roc(test$revenue ~ lm_predict, plot = TRUE, print.auc = TRUE)
-
-as.numeric(test_roc$auc)
-
-
-
+summary(lm_model)
+roc <- r[['rocs']]
+r1 <- roc[[1]]
+plot.roc(r1,
+         print.auc=TRUE,
+         auc.polygon=TRUE,
+         grid=c(0.1, 0.2),
+         grid.col=c("green", "red"),
+         max.auc.polygon=TRUE,
+         auc.polygon.col="lightblue",
+         print.thres=TRUE,
+         main= 'ROC Curve')

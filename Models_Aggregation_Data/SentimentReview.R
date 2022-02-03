@@ -240,9 +240,9 @@ confusionMatrix(test_final_r_f, nn_predict_f )
 
 
 ##linear Regression
-lm_model <- lm(f, data = train_final)
+lm_model_1 <- lm(f, data = train_final)
 str(test_final[,3:ncol(test_final)])
-lm_predict <- predict(lm_model,test_final[,3:ncol(test_final)])
+lm_predict <- predict(lm_model_1,test_final[,3:ncol(test_final)])
 lm_predict_f <- factor(ceiling(lm_predict), levels=c(1,2,3, 4, 5))
 test_final_r_f <- factor(test_final$ratings, levels=c(1,2,3, 4, 5))
 r <- multiclass.roc(test_final$ratings, lm_predict, levels=c(1,2,3, 4, 5))

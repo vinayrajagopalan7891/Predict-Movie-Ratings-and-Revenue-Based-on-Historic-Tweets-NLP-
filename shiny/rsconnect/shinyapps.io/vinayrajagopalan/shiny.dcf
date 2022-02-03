@@ -1,0 +1,13 @@
+name: shiny
+title: shiny
+username:
+account: vinayrajagopalan
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 5577510
+bundleId: 5540507
+url: https://vinayrajagopalan.shinyapps.io/shiny/
+when: 1643927859.91728
+lastSyncTime: 1643927859.91728
+asMultiple: FALSE
+asStatic: FALSE
